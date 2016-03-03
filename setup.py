@@ -12,7 +12,7 @@ setup(
     py_modules=["rpI2C"],
     description=(
         "Raspberry Pi I2C library. "
-        "See https://github/com/DJSymBiotiX/rpI2C for more."
+        "See https://github.com/DJSymBiotiX/rpI2C for more."
     ),
     license="MIT",
     keywords=['raspberry', 'pi', 'i2c'],
