@@ -3,7 +3,7 @@ import rpI2C
 
 rpI2C_classifiers = []
 
-with open("README.md", "r") as f:
+with open("README.rst", "r") as f:
     rpI2C_long_description = f.read()
 
 setup(name="rpI2C",
