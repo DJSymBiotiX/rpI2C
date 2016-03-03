@@ -57,9 +57,10 @@ and if that fails, it will connect to bus '1'. You can specify a bus manually in
 Send ideas through github issues.
 
 Send patches through pull requests.
+
 Code should ideally:
-    * Follow PEP8
-    * Generate not pyflakes warnings
+ * Follow PEP8
+ * Generate not pyflakes warnings
 
 
 #License#
