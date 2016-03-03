@@ -15,5 +15,6 @@ setup(name="rpI2C",
       description="Raspberry Pi I2C library",
       long_description=rpI2C_long_description,
       license="MIT",
+      keywords=['raspberry', 'pi', 'i2c'],
       classifiers=rpI2C_classifiers
       )
