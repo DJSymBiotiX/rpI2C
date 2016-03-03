@@ -78,7 +78,10 @@ Send ideas through github issues.
 
 Send patches through pull requests.
 
-Code should ideally: \* Follow PEP8 \* Generate no pyflakes warnings
+Code should ideally:
+
+- Follow PEP8
+- Generate no pyflakes warnings
 
 License
 =======
