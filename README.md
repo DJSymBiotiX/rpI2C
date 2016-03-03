@@ -60,7 +60,7 @@ Send patches through pull requests.
 
 Code should ideally:
  * Follow PEP8
- * Generate not pyflakes warnings
+ * Generate no pyflakes warnings
 
 
 #License#
