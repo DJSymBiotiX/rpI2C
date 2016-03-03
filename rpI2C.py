@@ -3,7 +3,7 @@ import re
 import smbus
 
 __author__ = "Fernando Chorney <fchorney@djsbx.com>"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 log = logging.getLogger(__name__)
 
