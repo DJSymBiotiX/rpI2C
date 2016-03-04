@@ -81,7 +81,7 @@ class I2C(object):
         self.bus.write_i2c_block_data(self.address, cmd, block)
         log.debug(
             "write_block_data: Wrote [%s] to command register 0x%02X" % (
-                ', '.join(['0x%02x' % x for x in block]),
+                ', '.join(['0x%02X' % x for x in block]),
                 cmd
             )
         )
@@ -116,7 +116,7 @@ class I2C(object):
         """
         result = self.bus.read_byte_data(self.address, cmd)
         log.debug(
-            "read_unsigned_byte: Read 0x%02x from command register 0x%02x" % (
+            "read_unsigned_byte: Read 0x%02X from command register 0x%02X" % (
                 result, cmd
             )
         )
@@ -133,7 +133,7 @@ class I2C(object):
             result -= 256
 
         log.debug(
-            "read_signed_byte: Read 0x%02x from command register 0x%02X" % (
+            "read_signed_byte: Read 0x%02X from command register 0x%02X" % (
                 result, cmd
             )
         )
