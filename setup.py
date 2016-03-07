@@ -1,7 +1,14 @@
 from setuptools import setup
 import rpI2C
 
-rpI2C_classifiers = []
+rpI2C_classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 2.7"
+]
 
 setup(
     name="rpI2C",
