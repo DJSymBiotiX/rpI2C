@@ -52,6 +52,14 @@ and if that fails, it will connect to bus '1'. You can specify a bus manually in
     bus = rpI2C.I2C(address, bus=0)
 ```
 
+### Logger ###
+If you want to define a logger, you can send it to the library by setting the `logger` argument.
+```
+    bus = rpI2C.I2C(address, logger=log)
+```
+
+If  you don't attach a logger then it will just define a `logging.getLogger(__name__)`
+
 #Contributing#
 
 Send ideas through github issues.
