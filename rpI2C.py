@@ -18,8 +18,8 @@ class I2C(object):
 
         # Test the connection to make sure we're connected to the right address
         try:
-            test = self.read_raw_byte()
-        except IOError as e:
+            self.read_raw_byte()
+        except IOError:
             self.log.error(
                 "I2C Test Connection Failed for Address: 0x%02X" % self.address
             )
@@ -187,7 +187,7 @@ class I2C(object):
                 self.log.debug("Attempting to connect to bus %s..." % bus_num)
                 self.bus = smbus.SMBus(bus_num)
                 self.log.debug("Success")
-            except IOError as e:
+            except IOError:
                 self.log.debug("Failed")
                 raise
 
@@ -197,17 +197,17 @@ class I2C(object):
             try:
                 connect(0)
                 return
-            except IOError as e:
+            except IOError:
                 pass
 
             try:
                 connect(1)
                 return
-            except IOError as e:
+            except IOError:
                 raise
         else:
             try:
                 connect(bus)
                 return
-            except IOError as e:
+            except IOError:
                 raise
