@@ -1,16 +1,15 @@
 import logging
-import re
 import smbus
 
 __author__ = "Fernando Chorney <fchorney@djsbx.com>"
 __version__ = "1.0.1"
 
-log = logging.getLogger(__name__)
-
 
 class I2C(object):
-    def __init__(self, address, bus=None):
-        log.debug("Initializing I2C bus for address: 0x%02X" % address)
+    def __init__(self, address, bus=None, logger=None):
+        self.log = logger or logging.getLogger(__name__)
+
+        self.log.debug("Initializing I2C bus for address: 0x%02X" % address)
         self.address = address
         self.bus = None
 
@@ -21,18 +20,18 @@ class I2C(object):
         try:
             test = self.read_raw_byte()
         except IOError as e:
-            log.error(
+            self.log.error(
                 "I2C Test Connection Failed for Address: 0x%02X" % self.address
             )
             raise
 
-        log.debug("Successfully Connected to 0x%02X" % address)
+        self.log.debug("Successfully Connected to 0x%02X" % address)
 
     def clean_up(self):
         """
         Close the I2C bus
         """
-        log.debug("Closing I2C bus for address: 0x%02X" % self.address)
+        self.log.debug("Closing I2C bus for address: 0x%02X" % self.address)
         self.bus.close()
 
     # Write Functions
@@ -42,14 +41,14 @@ class I2C(object):
         Send only the read / write bit
         """
         self.bus.write_quick(self.address)
-        log.debug("write_quick: Sent the read / write bit")
+        self.log.debug("write_quick: Sent the read / write bit")
 
     def write_byte(self, cmd, value):
         """
         Writes an 8-bit byte to the specified command register
         """
         self.bus.write_byte_data(self.address, cmd, value)
-        log.debug(
+        self.log.debug(
             "write_byte: Wrote 0x%02X to command register 0x%02X" % (
                 value, cmd
             )
@@ -60,7 +59,7 @@ class I2C(object):
         Writes a 16-bit word to the specified command register
         """
         self.bus.write_word_data(self.address, cmd, value)
-        log.debug(
+        self.log.debug(
             "write_word: Wrote 0x%04X to command register 0x%02X" % (
                 value, cmd
             )
@@ -71,7 +70,7 @@ class I2C(object):
         Writes an 8-bit byte directly to the bus
         """
         self.bus.write_byte(self.address, value)
-        log.debug("write_raw_byte: Wrote 0x%02X" % value)
+        self.log.debug("write_raw_byte: Wrote 0x%02X" % value)
 
     def write_block_data(self, cmd, block):
         """
@@ -79,7 +78,7 @@ class I2C(object):
         command register
         """
         self.bus.write_i2c_block_data(self.address, cmd, block)
-        log.debug(
+        self.log.debug(
             "write_block_data: Wrote [%s] to command register 0x%02X" % (
                 ', '.join(['0x%02X' % x for x in block]),
                 cmd
@@ -93,7 +92,7 @@ class I2C(object):
         Read an 8-bit byte directly from the bus
         """
         result = self.bus.read_byte(self.address)
-        log.debug("read_raw_byte: Read 0x%02X from the bus" % result)
+        self.log.debug("read_raw_byte: Read 0x%02X from the bus" % result)
         return result
 
     def read_block_data(self, cmd, length):
@@ -102,7 +101,7 @@ class I2C(object):
         Amount of bytes read in is defined by length
         """
         results = self.bus.read_i2c_block_data(self.address, cmd, length)
-        log.debug(
+        self.log.debug(
             "read_block_data: Read [%s] from command register 0x%02X" % (
                 ', '.join(['0x%02X' % x for x in results]),
                 cmd
@@ -115,7 +114,7 @@ class I2C(object):
         Read an unsigned byte from the specified command register
         """
         result = self.bus.read_byte_data(self.address, cmd)
-        log.debug(
+        self.log.debug(
             "read_unsigned_byte: Read 0x%02X from command register 0x%02X" % (
                 result, cmd
             )
@@ -132,7 +131,7 @@ class I2C(object):
         if result > 127:
             result -= 256
 
-        log.debug(
+        self.log.debug(
             "read_signed_byte: Read 0x%02X from command register 0x%02X" % (
                 result, cmd
             )
@@ -150,7 +149,7 @@ class I2C(object):
         if not little_endian:
             result = ((result << 8) & 0xFF00) + (result >> 8)
 
-        log.debug(
+        self.log.debug(
             "read_unsigned_word: Read 0x%04X from command register 0x%02X" % (
                 result, cmd
             )
@@ -172,7 +171,7 @@ class I2C(object):
         if result > 32767:
             result -= 65536
 
-        log.debug(
+        self.log.debug(
             "read_signed_word: Read 0x%04X from command register 0x%02X" % (
                 result, cmd
             )
@@ -185,11 +184,11 @@ class I2C(object):
         """
         def connect(bus_num):
             try:
-                log.debug("Attempting to connect to bus %s..." % bus_num)
+                self.log.debug("Attempting to connect to bus %s..." % bus_num)
                 self.bus = smbus.SMBus(bus_num)
-                log.debug("Success")
+                self.log.debug("Success")
             except IOError as e:
-                log.debug("Failed")
+                self.log.debug("Failed")
                 raise
 
         # If the bus is not explicitly stated, try 0 and then try 1 if that
